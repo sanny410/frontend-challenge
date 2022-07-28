@@ -4,14 +4,14 @@ import {Route, Routes} from "react-router-dom";
 import axios from 'axios'
 
 import './App.css';
-import Header from "./Header/Header";
-import CatsList from "./CatsList/CatsList";
-import FavoriteCats from "./FavoriteCats/FavoriteCats";
+import Header from "../Header/Header";
+import CatsList from "../CatsList/CatsList";
+import FavoriteCats from "../CatsList/FavoriteCats";
 
 
 function App() {
   const [catsList, setCatsList] = useState([]);
-  const [favoriteCats, setFavoriteCats] = useState();
+  const [favoriteCats, setFavoriteCats] = useState(() => JSON.parse(window.localStorage.getItem('favoriteCats')) || []);
   const [currentPage, setCurrentPage] = useState(1);
   const [fetching, setFetching] = useState(true);
 
@@ -27,12 +27,14 @@ function App() {
           axios.get(`https://api.thecatapi.com/v1/images/search?format=json&limit=15&_page=${currentPage}`,
               {headers: {"x-api-key": "03b1c2d3-fb3d-4363-9e71-949a93d8d9f8"}})
               .then(res =>  {
-                  setCatsList([...catsList, ...res.data])
+                  setCatsList(catsList => [...catsList, ...res.data])
                   setCurrentPage(prevState => prevState + 1)
+                  console.log('render')
               })
               .finally(() => setFetching(false))
       }
   }, [fetching])
+
 
     const scrollHandler = (e) => {
       if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
@@ -40,15 +42,21 @@ function App() {
       }
     }
 
+    useEffect(() => {
+        setFavoriteCats(JSON.parse(window.localStorage.getItem('favoriteCats')))
+    }, []);
+
+    useEffect(() => {
+        window.localStorage.setItem('favoriteCats', JSON.stringify(favoriteCats));
+    },[favoriteCats])
 
   return (
     <div className="App">
       <Header />
         <Routes>
-            <Route exact path='/' element={<CatsList list={catsList}/>} />
-            <Route path={'/favorite'} element={<FavoriteCats favoriteList={favoriteCats}/>} />
+            <Route exact path='/' element={<CatsList list={catsList} setFavoriteCats={setFavoriteCats} favoriteCats={favoriteCats}/>} />
+            <Route path={'/favorite'} element={<FavoriteCats favoriteCats={favoriteCats} setFavoriteCats={setFavoriteCats}/>} />
         </Routes>
-        <p className="load_more_cats _container">... загружаем еще котиков ...</p>
     </div>
   );
 }
