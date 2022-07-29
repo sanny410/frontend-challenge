@@ -6,8 +6,8 @@ const CatCard = ({cat, setFavoriteCats, favoriteCats, isFavorite}) => {
     const [favoriteClass, setFavoriteClass] = useState(false)
 
     useEffect(() => {
-        let isArray = favoriteCats.find(item => item.id === cat.id);
-        if (isArray !== undefined) {
+        let isArray = favoriteCats.findIndex(item => item.id === cat.id);
+        if (isArray !== -1) {
             setFavoriteClass(true)
         }
     }, [])
