@@ -10,7 +10,7 @@ const CatCard = ({cat, setFavoriteCats, favoriteCats, isFavorite}) => {
         if (isArray !== -1) {
             setFavoriteClass(true)
         }
-    }, [])
+    }, [favoriteCats])
 
 
     const toggleClass = () => {
