@@ -11,7 +11,7 @@ import FavoriteCats from "../CatsList/FavoriteCats";
 
 function App() {
   const [catsList, setCatsList] = useState([]);
-  const [favoriteCats, setFavoriteCats] = useState(() => JSON.parse(window.localStorage.getItem('favoriteCats')) || []);
+  const [favoriteCats, setFavoriteCats] = useState(JSON.parse(window.localStorage.getItem('favoriteCats')) ?? []);
   const [currentPage, setCurrentPage] = useState(1);
   const [fetching, setFetching] = useState(true);
 
@@ -21,6 +21,7 @@ function App() {
           document.removeEventListener('scroll', scrollHandler)
       }
   }, [])
+
 
   useEffect(() => {
       if (fetching) {

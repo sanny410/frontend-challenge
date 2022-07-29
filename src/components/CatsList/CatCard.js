@@ -6,8 +6,11 @@ const CatCard = ({cat, setFavoriteCats, favoriteCats, isFavorite}) => {
     const [favoriteClass, setFavoriteClass] = useState(false);
 
     useEffect(() => {
-        if (favoriteCats.includes(cat) === true) {
-            setFavoriteClass(true)
+        console.log(favoriteClass)
+        if (favoriteCats.length !== 0) {
+            if (favoriteCats.includes(cat) === true) {
+                setFavoriteClass(true)
+            }
         }
     }, [favoriteCats])
 
