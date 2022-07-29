@@ -29,7 +29,6 @@ function App() {
               .then(res =>  {
                   setCatsList(catsList => [...catsList, ...res.data])
                   setCurrentPage(prevState => prevState + 1)
-                  console.log('render')
               })
               .finally(() => setFetching(false))
       }
