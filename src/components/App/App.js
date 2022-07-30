@@ -13,7 +13,8 @@ function App() {
 
     const [favoriteCats, setFavoriteCats] = useState(() => {
         const cats = JSON.parse(sessionStorage.getItem("favoriteCats"));
-        if (cats != null) {
+        console.log(`Первый рендер. UseState ${cats}` )
+        if (cats !== null) {
             return cats
         } else return []
     });
@@ -48,9 +49,6 @@ function App() {
       }
     }
 
-    useEffect(() => {
-        setFavoriteCats(JSON.parse(sessionStorage.getItem('favoriteCats')))
-    }, []);
 
     useEffect(() => {
         sessionStorage.setItem('favoriteCats', JSON.stringify(favoriteCats));
