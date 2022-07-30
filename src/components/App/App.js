@@ -8,10 +8,16 @@ import Header from "../Header/Header";
 import CatsList from "../CatsList/CatsList";
 import FavoriteCats from "../CatsList/FavoriteCats";
 
-
 function App() {
   const [catsList, setCatsList] = useState([]);
-  const [favoriteCats, setFavoriteCats] = useState(() => JSON.parse(window.localStorage.getItem('favoriteCats')) || []);
+
+    const [favoriteCats, setFavoriteCats] = useState(() => {
+        const cats = JSON.parse(sessionStorage.getItem("favoriteCats"));
+        if (cats != null) {
+            return cats
+        } else return []
+    });
+
   const [currentPage, setCurrentPage] = useState(1);
   const [fetching, setFetching] = useState(true);
 
@@ -42,11 +48,11 @@ function App() {
     }
 
     useEffect(() => {
-        setFavoriteCats(JSON.parse(window.localStorage.getItem('favoriteCats')))
+        setFavoriteCats(JSON.parse(sessionStorage.getItem('favoriteCats')))
     }, []);
 
     useEffect(() => {
-        window.localStorage.setItem('favoriteCats', JSON.stringify(favoriteCats));
+        sessionStorage.setItem('favoriteCats', JSON.stringify(favoriteCats));
     },[favoriteCats])
 
   return (
