@@ -3,14 +3,16 @@ import './style.css'
 
 const CatCard = ({cat, setFavoriteCats, favoriteCats, isFavorite}) => {
 
-    const [favoriteClass, setFavoriteClass] = useState(false)
+    const [favoriteClass, setFavoriteClass] = useState(false);
 
     useEffect(() => {
-        let isArray = favoriteCats.find(item => item.id === cat.id);
-        if (isArray !== undefined) {
-            setFavoriteClass(true)
+        console.log(favoriteCats)
+        if (favoriteCats.length !== 0) {
+            if (favoriteCats.includes(cat) !== false) {
+                setFavoriteClass(true)
+            }
         }
-    }, [])
+    }, [favoriteCats])
 
 
     const toggleClass = () => {

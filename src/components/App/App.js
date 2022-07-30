@@ -28,6 +28,7 @@ function App() {
       }
   }, [])
 
+
   useEffect(() => {
       if (fetching) {
           axios.get(`https://api.thecatapi.com/v1/images/search?format=json&limit=15&_page=${currentPage}`,
