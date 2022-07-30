@@ -3,7 +3,7 @@ import './style.css'
 
 const CatCard = ({cat, setFavoriteCats, favoriteCats, isFavorite}) => {
 
-    const [favoriteClass, setFavoriteClass] = useState(false)
+    const [favoriteClass, setFavoriteClass] = useState(false);
 
     useEffect(() => {
         console.log(favoriteCats)
@@ -12,7 +12,7 @@ const CatCard = ({cat, setFavoriteCats, favoriteCats, isFavorite}) => {
                 setFavoriteClass(true)
             }
         }
-    }, [])
+    }, [favoriteCats])
 
 
     const toggleClass = () => {
