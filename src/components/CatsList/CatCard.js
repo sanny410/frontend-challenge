@@ -3,6 +3,7 @@ import './style.css'
 
 const CatCard = ({cat, setFavoriteCats, favoriteCats, isFavorite}) => {
 
+
     const [favoriteClass, setFavoriteClass] = useState(false);
 
     useEffect(() => {
