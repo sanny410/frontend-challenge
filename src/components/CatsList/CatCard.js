@@ -3,10 +3,10 @@ import './style.css'
 
 const CatCard = ({cat, setFavoriteCats, favoriteCats, isFavorite}) => {
 
+
     const [favoriteClass, setFavoriteClass] = useState(false);
 
     useEffect(() => {
-        console.log(favoriteCats)
         if (favoriteCats.length !== 0) {
             if (favoriteCats.includes(cat) !== false) {
                 setFavoriteClass(true)

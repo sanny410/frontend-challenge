@@ -1,6 +1,7 @@
 .main__page {
     width: 100%;
     display: grid;
+    align-items: center;
     grid-template-rows: 1fr 20px;
 }
 
@@ -91,4 +92,3 @@
         opacity:1;
     }
 }
-

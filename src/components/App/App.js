@@ -10,17 +10,10 @@ import FavoriteCats from "../CatsList/FavoriteCats";
 
 function App() {
   const [catsList, setCatsList] = useState([]);
-
-    const [favoriteCats, setFavoriteCats] = useState(() => {
-        const cats = JSON.parse(sessionStorage.getItem("favoriteCats"));
-        console.log(`Первый рендер. UseState ${cats}` )
-        if (cats !== null) {
-            return cats
-        } else return []
-    });
-
+  const [favoriteCats, setFavoriteCats] = useState(() => JSON.parse(localStorage.getItem("favoriteCats")) || []);
   const [currentPage, setCurrentPage] = useState(1);
   const [fetching, setFetching] = useState(true);
+  const [loader, setLoader] = useState(true);
 
   useEffect(() => {
       document.addEventListener('scroll', scrollHandler)
@@ -38,7 +31,11 @@ function App() {
                   setCatsList(catsList => [...catsList, ...res.data])
                   setCurrentPage(prevState => prevState + 1)
               })
-              .finally(() => setFetching(false))
+              .finally(() => {
+                  setFetching(false)
+                  setLoader(false)
+                  }
+              )
       }
   }, [fetching])
 
@@ -51,14 +48,14 @@ function App() {
 
 
     useEffect(() => {
-        sessionStorage.setItem('favoriteCats', JSON.stringify(favoriteCats));
+        localStorage.setItem('favoriteCats', JSON.stringify(favoriteCats));
     },[favoriteCats])
 
   return (
     <div className="App">
       <Header />
         <Routes>
-            <Route exact path='/' element={<CatsList list={catsList} setFavoriteCats={setFavoriteCats} favoriteCats={favoriteCats}/>} />
+            <Route exact path='/' element={<CatsList list={catsList} setFavoriteCats={setFavoriteCats} favoriteCats={favoriteCats} loader={loader}/>} />
             <Route path={'/favorite'} element={<FavoriteCats favoriteCats={favoriteCats} setFavoriteCats={setFavoriteCats}/>} />
         </Routes>
     </div>
